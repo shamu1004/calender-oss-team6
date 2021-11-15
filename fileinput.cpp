@@ -1,17 +1,21 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include "HWclass.h"
 #include <iostream>
+#include <fstream>
 #include <string>
 #include <list>
 #include <string>
 
 
 
-
 using namespace std;
 
 int main(void) {
-    list<HW> homeworklist;
+
+
+    int inputsize = 0;
+    ofstream file_obj;
+    file_obj.open("Input.txt", ios::app | ios::binary);
     while (1) {
         string input;
 
@@ -27,7 +31,7 @@ int main(void) {
         cout << "<< date : ";
         int date;
         cin >> date;
-       
+
 
         string name = "";
         cout << "<< HomeWork Name: ";
@@ -37,47 +41,39 @@ int main(void) {
         cout << "<< Difficulty: ";
         cin >> difficulty;
 
+
         HW homework(date, month, name, difficulty);
-        
 
-        homeworklist.push_back(homework);
+
+        file_obj.write((char*)&homework, sizeof(homework));
+
+
+
+
         cout << ">> Successfully added to list!" << endl;
+        inputsize++;
     }
-
-    string filepath = "./Homeworklist.dat";
-    FILE* fp;
-    fp = fopen(filepath.c_str(), "a");
-    if (fp == nullptr) {
-        perror("open() error!");
-        return 1;
-    }
-
-    list<HW>::iterator iter;
-    for (iter = homeworklist.begin(); iter != homeworklist.end(); ++iter) {
-        fwrite(&(*iter), sizeof(HW), 1, fp);
-    };
-    fclose(fp);
-    cout << ">> " << homeworklist.size()
-        << " students info was successfully saved to the " << filepath << endl;
+    file_obj.close();
 
 
-    fp = fopen(filepath.c_str(), "r");
-    list<HW>::iterator newiter;
-    fread(&(*newiter), sizeof(HW), 1, fp);
-    for (newiter = homeworklist.begin(); newiter != homeworklist.end(); ++newiter) {
-        HW newHW;
-        newHW = *newiter;
-        cout << newHW.returnmonth() << "월" << endl;
-        cout << newHW.returndate() << "일" << endl;
-        cout << "과제 : " << newHW.returnHWname() << endl;
-        cout << "난이도 : " << newHW.returndifficulty() << endl;
+    cout << ">> " << inputsize
+        << " students info was successfully saved to the " << "input.txt" << endl;
+
+    ifstream ifile_obj;
+    ifile_obj.open("Input.txt", ios::in | ios::binary);
+    HW readhomework;
+    do {
+
+        ifile_obj.read((char*)&readhomework, sizeof(readhomework));
+        cout << readhomework.returnmonth() << "월" << endl;
+        cout << readhomework.returndate() << "일" << endl;
+        cout << "과제 : " << readhomework.returnHWname() << endl;
+        cout << "난이도 : " << readhomework.returndifficulty() << endl;
         cout << "------------------" << endl;
-    }
-    
-    if (fp == nullptr) {
-        perror("open() error!");
-        return 1;
-    }
+        ifile_obj.peek();
+    } while (!ifile_obj.eof());
+    ifile_obj.close();
+
 
     return 0;
 }

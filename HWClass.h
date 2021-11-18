@@ -16,6 +16,7 @@ public:
 		difficulty = 0;
 	}
 	HW(const HW &homework);
+	HW(int date, int month, string hwname, int difficulty);
 	int returndate() { return date; }
 	int returnmonth() { return month; }
 	string returnHWname() { return hwname; }
@@ -33,6 +34,12 @@ HW::HW(const HW& homework) {
 	this->month = homework.month;
 	this->hwname = homework.hwname;
 	this->difficulty = homework.difficulty;
+}
+HW::HW(int date, int month, string hwname, int difficulty) {
+	this->date = date;
+	this->month = month;
+	this->hwname = hwname;
+	this->difficulty = difficulty;
 }
 void HW::setmonth(const int source) {
 	this->month = source;

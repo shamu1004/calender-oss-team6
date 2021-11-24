@@ -7,10 +7,11 @@ using namespace std;
 
 int main(void) {
 	int inputsize = 0;
-
+	int year;
 	ofstream file_obj;
 	file_obj.open("Input.txt", ios::app | ios::binary);
-
+	cout<<"년도를 입력하시오 ";
+	cin>>year;
 	while (1) {
 		string input;
 
@@ -87,7 +88,7 @@ int main(void) {
 		arr2[i].setDifficulty(arr[i].returndifficulty());
 	}
 
-	printCalendar(2021, arr365,arr365_2);
+	printCalendar(year, arr365,arr365_2);
 	
 	while (1) {
 		int select;

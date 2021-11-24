@@ -69,13 +69,15 @@ int main(void) {
 	
 	//얘는 365로 바꾼 배열
 	int arr365[10];
+	int arr365_2[10];
 
 	//다시 월/일/난이도로 돌린 HW 타입 배열 -> 일단 길이 10이라고 가정
 	HW arr2[10];
+	HW arr3[10];
 
 	for (int i = 0; i < num; i++) {
 		arr365[i] = calculateCalendar(arr[i].returnmonth(), arr[i].returndate()); // arr365에 정보 입력
-
+		arr365_2[i] = calculateCalendar(arr[i].returnmonth(), arr[i].returndate()-arr[i].returndifficulty());
 		int dm[2]; // recalculateCalendar에서 월/일 공유하는 배열
 
 		recalculateCalendar(arr365[i], dm); // arr365 -> arr2로 다시 되돌려주는 과정
@@ -85,7 +87,7 @@ int main(void) {
 		arr2[i].setDifficulty(arr[i].returndifficulty());
 	}
 
-	printCalendar(2021, arr365);
+	printCalendar(2021, arr365,arr365_2);
 	
 	while (1) {
 		int select;
@@ -113,6 +115,15 @@ int main(void) {
 					cout << "|--------------------------|\n\n";
 					tmpint++;
 					
+				}
+				if (calculateCalendar(month, date) == arr365_2[m]) {
+					cout << "|--------------------------|\n";
+					cout << "과제 이름 : " << arr2[m].returnHWname() << '\n';
+					cout << arr2[m].returnmonth() << " 월 " << arr2[m].returndate() << " 일\n";
+					cout << "난이도 : " << arr2[m].returndifficulty() << '\n';
+					cout << "|--------------------------|\n\n";
+					tmpint++;
+
 				}
 				
 			}

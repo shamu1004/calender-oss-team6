@@ -87,12 +87,21 @@ int numberOfDays(int monthNumber, int year)
 int calculateCalendar(int month, int day) {
 	//1월부터 12월
 	int result = 0;
-
-	for (int i = 0; i < month-1; i++) {
-		result += days[i];
+	if (day > 0) {
+		for (int i = 0; i < month - 1; i++) {
+			result += days[i];
+		}
+		result += day;
 	}
+	else if (day <= 0) {
+		for (int i = 0; i < month - 2; i++) {
+			result += days[i];
+		}
+		result += days[month-2] + day;
+	}
+	
 
-	result += day;
+	
 
 	//윤년일 때는 하루 더해줌
 	if (isLeap && month > 2) {
@@ -124,7 +133,7 @@ void recalculateCalendar(int date, int arr[]) {
 
 
 // Function to print the calendar of the given year 
-void printCalendar(int year, int arr[])
+void printCalendar(int year, int arr[],int arr2[])
 {
 	cout << "\n		         Calendar - " << year << "\n";
 
@@ -149,12 +158,28 @@ void printCalendar(int year, int arr[])
 				if (calculateCalendar(i+1, j) == arr[m])
 					cor = true;
 			}
+			bool cor2 = false;
+			for (int m = 0; m < 10; m++) {
+				if (calculateCalendar(i + 1, j) == arr2[m])
+					cor2 = true;
+			}
 
 			// 일치시 *표시
-			if (cor) 
+			if (cor && cor2) {
+				cout << '\t' << j << '*'<<'!';
+				cor = false;
+				cor2 = false;
+			}
+				
+			else if(cor)
 				cout << '\t' << j << '*';
+			else if(cor2)
+				cout << '\t' << j << '!';
 			else
 				cout << '\t' << j;
+
+			
+			
 
 			if (++k > 6)
 			{

@@ -101,23 +101,25 @@ int main(void) {
 			cin >> date;
 			cout << '\n';
 
-			bool isExist = false;
+			
+			int tmpint = 0;
 			for (int m = 0; m < 10; m++) {
-				if (calculateCalendar(month, date) == arr365[m]) {
-					isExist = true;
-					exist = m;
-				}
-			}
 
-			if (isExist) {
-				cout << "|--------------------------|\n";
-				cout << "과제 이름 : " << arr2[exist].returnHWname() << '\n';
-				cout << arr2[exist].returnmonth() << " 월 " << arr2[exist].returndate() << " 일\n";
-				cout << "난이도 : " << arr2[exist].returndifficulty() << '\n';
-				cout << "|--------------------------|\n\n";
+				if (calculateCalendar(month, date) == arr365[m]) {
+					cout << "|--------------------------|\n";
+					cout << "과제 이름 : " << arr2[m].returnHWname() << '\n';
+					cout << arr2[m].returnmonth() << " 월 " << arr2[m].returndate() << " 일\n";
+					cout << "난이도 : " << arr2[m].returndifficulty() << '\n';
+					cout << "|--------------------------|\n\n";
+					tmpint++;
+					
+				}
+				
 			}
-			else
+			if (tmpint == 0)
 				cout << "해당 날짜에 저장된 과제가 없습니다." << '\n';
+
+			
 		}
 		else if (select == 2)
 			break;
